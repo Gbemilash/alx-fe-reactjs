@@ -8,7 +8,7 @@ export default function MainContent() {
         <UserProfile name="Ada Lovelace" age="28" bio="I enjoy building beautiful user interfaces." />
       </section>
 
-      <section>
+      <section style={{ padding: '10px', border: '1px solid lightgray', borderRadius: '5px' }}>
         <h3 style={{ marginTop: 0 }}>My Favorite Cities</h3>
         <ul style={{ listStyleType: 'square', paddingLeft: '20px' }}>
           <li>Paris</li>
