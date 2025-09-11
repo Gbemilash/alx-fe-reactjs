@@ -6,12 +6,9 @@ export default function Footer() {
       backgroundColor: '#222',
       color: 'white',
       textAlign: 'center',
-      padding: '10px',
-      marginTop: '20px'
+      padding: '10px'
     }}>
-      <p style={{ margin: 0 }}>
-        © {new Date().getFullYear()} My Favorite Cities. All rights reserved.
-      </p>
+      <p style={{ margin: 0 }}>© {new Date().getFullYear()} My Favorite Cities</p>
     </footer>
   );
 }
