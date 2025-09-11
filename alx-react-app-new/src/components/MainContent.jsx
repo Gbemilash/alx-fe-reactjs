@@ -3,8 +3,8 @@ import UserProfile from './UserProfile';
 
 export default function MainContent() {
   return (
-    <main style={{ padding: '20px' }}>
-      <section style={{ marginBottom: '20px' }}>
+    <main style={{ padding: '10px', backgroundColor: '#fafafa' }}>
+      <section style={{ marginBottom: '10px' }}>
         <UserProfile name="Ada Lovelace" age="28" bio="I enjoy building beautiful user interfaces." />
       </section>
 
