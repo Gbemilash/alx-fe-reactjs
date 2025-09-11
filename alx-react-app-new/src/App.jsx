@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import UserProfile from './UserProfile';
-import MainContent from './MainContent';
+import MainContent from './components/MainContent';
 import Counter from './components/Counter';
 import Footer from './Footer';
 
