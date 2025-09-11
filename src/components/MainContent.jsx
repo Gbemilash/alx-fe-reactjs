@@ -14,9 +14,9 @@ export default function MainContent() {
           I love to visit New York, Paris, and Tokyo.
         </p>
         <ul style={{ listStyleType: 'square', paddingLeft: '20px' }}>
+          <li>New York</li>
           <li>Paris</li>
           <li>Tokyo</li>
-          <li>New York</li>
         </ul>
       </section>
     </main>
