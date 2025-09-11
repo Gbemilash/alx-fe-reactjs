@@ -1,7 +1,8 @@
 import React from 'react';
 import Header from './Header';
 import UserProfile from './UserProfile';
-import MainContent from './components/MainContent';
+import MainContent from './MainContent';
+import Counter from './components/Counter';
 import Footer from './Footer';
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
       <Header />
       <UserProfile name="Jane Doe" age={28} bio="I love coding and traveling." />
       <MainContent />
+      <Counter />
       <Footer />
     </div>
   );
