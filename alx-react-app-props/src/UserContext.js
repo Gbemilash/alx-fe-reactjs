@@ -1,9 +1,5 @@
 import React from 'react';
 
-/**
- * UserContext - unified export
- * Named export for destructuring: import { UserContext }
- * Default export for legacy usage: import UserContext
- */
+// Named + default export for compatibility
 export const UserContext = React.createContext(null);
 export default UserContext;
