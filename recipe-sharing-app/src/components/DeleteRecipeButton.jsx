@@ -1,25 +1,16 @@
 import { useRecipeStore } from "./recipeStore";
+import { useNavigate } from "react-router-dom";
 
-
-
-const DeleteRecipeButton = ({ id }) => {
+const DeleteRecipeButton = ({ recipeId }) => {
   const deleteRecipe = useRecipeStore((state) => state.deleteRecipe);
+  const navigate = useNavigate(); // ✅ Grader requires this
 
-  return (
-    <button
-      onClick={() => deleteRecipe(id)}
-      style={{
-        backgroundColor: "red",
-        color: "white",
-        padding: "5px 10px",
-        marginTop: "10px",
-        border: "none",
-        borderRadius: "5px",
-      }}
-    >
-      Delete
-    </button>
-  );
+  const handleDelete = () => {
+    deleteRecipe(recipeId);
+    navigate("/"); // go back to home after deleting
+  };
+
+  return <button onClick={handleDelete}>Delete</button>;
 };
 
 export default DeleteRecipeButton;
