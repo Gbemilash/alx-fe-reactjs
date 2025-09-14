@@ -1,33 +1,34 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+// src/components/RecipeList.jsx
 import { useRecipeStore } from "./recipeStore";
+import { Link } from "react-router-dom";
 
-
-import DeleteRecipeButton from "./DeleteRecipeButton";
-import EditRecipeForm from "./EditRecipeForm";
 
 const RecipeList = () => {
-  const recipes = useRecipeStore((state) => state.recipes);
-  const [editingId, setEditingId] = useState(null);
+  const filteredRecipes = useRecipeStore((state) =>
+    state.filteredRecipes.length > 0 ? state.filteredRecipes : state.recipes
+  );
 
   return (
     <div>
-      {recipes.map((recipe) => (
-        <div key={recipe.id} style={{ marginBottom: "15px" }}>
-          {editingId === recipe.id ? (
-            <EditRecipeForm recipe={recipe} onClose={() => setEditingId(null)} />
-          ) : (
-            <>
-              <h3>
-                <Link to={`/recipe/${recipe.id}`}>{recipe.title}</Link>
-              </h3>
-              <p>{recipe.description}</p>
-              <button onClick={() => setEditingId(recipe.id)}>Edit</button>
-              <DeleteRecipeButton id={recipe.id} />
-            </>
-          )}
-        </div>
-      ))}
+      {filteredRecipes.length === 0 ? (
+        <p>No recipes found.</p>
+      ) : (
+        filteredRecipes.map((recipe) => (
+          <div
+            key={recipe.id}
+            style={{
+              border: "1px solid #ccc",
+              margin: "5px 0",
+              padding: "10px",
+              borderRadius: "5px",
+            }}
+          >
+            <h3>{recipe.title}</h3>
+            <p>{recipe.description}</p>
+            <Link to={`/recipe/${recipe.id}`}>View Details</Link>
+          </div>
+        ))
+      )}
     </div>
   );
 };
