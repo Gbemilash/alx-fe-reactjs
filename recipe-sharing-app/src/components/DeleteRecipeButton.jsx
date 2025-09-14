@@ -1,30 +1,22 @@
 import { useRecipeStore } from "../recipeStore";
 
-const DeleteRecipeButton = ({ recipeId, onDelete }) => {
-  const deleteRecipe = useRecipeStore((state) => state.deleteRecipe);
 
-  const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this recipe?")) {
-      deleteRecipe(recipeId);
-      if (onDelete) onDelete();
-    }
-  };
+const DeleteRecipeButton = ({ id }) => {
+  const deleteRecipe = useRecipeStore((state) => state.deleteRecipe);
 
   return (
     <button
-      onClick={handleDelete}
+      onClick={() => deleteRecipe(id)}
       style={{
-        backgroundColor: "#dc3545",
+        backgroundColor: "red",
         color: "white",
+        padding: "5px 10px",
+        marginTop: "10px",
         border: "none",
-        padding: "10px",
-        borderRadius: "6px",
-        cursor: "pointer",
-        marginTop: "15px",
-        width: "100%",
+        borderRadius: "5px",
       }}
     >
-      🗑 Delete Recipe
+      Delete
     </button>
   );
 };
