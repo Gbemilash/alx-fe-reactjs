@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { fetchUserData } from "../services/githubService";
+import { fetchUserData, searchUsers } from "../services/githubService";
 
 export default function Search() {
   const [username, setUsername] = useState("");
-  const [userData, setUserData] = useState(null);
+  const [location, setLocation] = useState("");
+  const [minRepos, setMinRepos] = useState("");
+  const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -11,55 +13,97 @@ export default function Search() {
     e.preventDefault();
     setLoading(true);
     setError("");
-    setUserData(null);
+    setResults([]);
 
     try {
-      const data = await fetchUserData(username);
-      setUserData(data);
+      const data = await searchUsers(username, location, minRepos);
+      setResults(data.items || []);
+      if (data.total_count === 0) {
+        setError("Looks like we cant find any users");
+      }
     } catch (err) {
-      setError("Looks like we cant find the user");
+      setError("Error fetching users. Try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto">
+    <div className="p-4 max-w-xl mx-auto">
+      <h1 className="text-3xl font-bold text-center mb-6">
+        GitHub User Search
+      </h1>
+
       {/* Search Form */}
-      <form onSubmit={handleSubmit} className="flex gap-2 mb-4">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white shadow p-4 rounded-2xl space-y-3"
+      >
         <input
           type="text"
-          placeholder="Enter GitHub username"
+          placeholder="GitHub username (optional)"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          className="flex-1 p-2 border rounded-xl"
+          className="w-full p-2 border rounded-xl"
         />
-        <button type="submit" className="bg-blue-500 text-white px-4 rounded-xl">
+
+        <input
+          type="text"
+          placeholder="Location (optional)"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          className="w-full p-2 border rounded-xl"
+        />
+
+        <input
+          type="number"
+          placeholder="Minimum Repos (optional)"
+          value={minRepos}
+          onChange={(e) => setMinRepos(e.target.value)}
+          className="w-full p-2 border rounded-xl"
+        />
+
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 rounded-xl hover:bg-blue-600 transition"
+        >
           Search
         </button>
       </form>
 
       {/* Loading State */}
-      {loading && <p>Loading...</p>}
+      {loading && <p className="text-center mt-4">Loading...</p>}
 
-      {/* Error Message */}
-      {error && <p className="text-red-500">{error}</p>}
+      {/* Error */}
+      {error && <p className="text-center text-red-500 mt-4">{error}</p>}
 
-      {/* User Data */}
-      {userData && (
-        <div className="p-4 border rounded-xl shadow">
-          <img src={userData.avatar_url} alt="Avatar" className="w-24 h-24 rounded-full mx-auto" />
-          <h2 className="text-xl font-bold text-center mt-2">{userData.name || userData.login}</h2>
-          <a
-            href={userData.html_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block text-blue-600 text-center mt-1"
+      {/* Results */}
+      <div className="mt-6 space-y-4">
+        {results.map((user) => (
+          <div
+            key={user.id}
+            className="flex items-center gap-4 bg-white shadow p-4 rounded-xl"
           >
-            View Profile
-          </a>
-        </div>
-      )}
+            <img
+              src={user.avatar_url}
+              alt={user.login}
+              className="w-16 h-16 rounded-full"
+            />
+            <div>
+              <p className="font-bold">{user.login}</p>
+              <a
+                href={user.html_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600"
+              >
+                View Profile
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
+
