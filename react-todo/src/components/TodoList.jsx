@@ -4,7 +4,7 @@ import AddTodoForm from "./AddTodoForm";
 export default function TodoList() {
   const [todos, setTodos] = useState([
     { id: 1, text: "Learn React", completed: false },
-    { id: 2, text: "Build a Todo App", completed: false },
+    { id: 2, text: "Build Todo App", completed: false },
   ]);
 
   const addTodo = (text) => {
@@ -33,9 +33,9 @@ export default function TodoList() {
           <li
             key={todo.id}
             onClick={() => toggleTodo(todo.id)}
-            style={{ textDecoration: todo.completed ? "line-through" : "" }}
+            style={{ textDecoration: todo.completed ? "line-through" : "none", cursor: "pointer" }}
           >
-            {todo.text} <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+            {todo.text} <button onClick={(e) => { e.stopPropagation(); deleteTodo(todo.id); }}>Delete</button>
           </li>
         ))}
       </ul>
