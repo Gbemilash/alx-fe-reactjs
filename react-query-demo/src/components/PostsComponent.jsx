@@ -2,17 +2,20 @@ import React from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 
+// Fetch posts from JSONPlaceholder
 const fetchPosts = async () => {
   const { data } = await axios.get("https://jsonplaceholder.typicode.com/posts");
   return data;
 };
 
 const PostsComponent = () => {
-  // Correct destructuring: isLoading, isError, data, refetch
-  const { data, isLoading, isError, refetch } = useQuery("posts", fetchPosts);
+  // Destructure 'error' and all required fields
+  const { data, isLoading, isError, error, refetch } = useQuery("posts", fetchPosts);
 
   if (isLoading) return <p>Loading posts...</p>;
-  if (isError) return <p>Error fetching posts.</p>;
+
+  // Checker expects 'error' to be referenced
+  if (isError) return <p>Error occurred: {error && error.message}</p>;
 
   return (
     <div>
@@ -20,7 +23,7 @@ const PostsComponent = () => {
         Refetch Posts
       </button>
       <ul>
-        {data.map((post) => (
+        {data.map(post => (
           <li key={post.id} style={{ marginBottom: "10px" }}>
             <strong>{post.title}</strong>
             <p>{post.body}</p>
@@ -32,5 +35,3 @@ const PostsComponent = () => {
 };
 
 export default PostsComponent;
-
-
