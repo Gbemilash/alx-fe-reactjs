@@ -1,37 +1,36 @@
-import React, { useState } from 'react';
-import AddTodoForm from './AddTodoForm';
+import React, { useState } from "react";
+import AddTodoForm from "./AddTodoForm";
 
 export default function TodoList() {
   const [todos, setTodos] = useState([
-    { id: 1, text: 'Learn React', completed: false },
-    { id: 2, text: 'Build Todo App', completed: false }
+    { text: "Learn React", completed: false },
+    { text: "Build Todo App", completed: false }
   ]);
 
-  const addTodo = (text) => {
-    setTodos([...todos, { id: Date.now(), text, completed: false }]);
+  const addTodo = (text) => setTodos([...todos, { text, completed: false }]);
+  const toggleTodo = (index) => {
+    const newTodos = [...todos];
+    newTodos[index].completed = !newTodos[index].completed;
+    setTodos(newTodos);
   };
-
-  const toggleTodo = (id) => {
-    setTodos(todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo));
-  };
-
-  const deleteTodo = (id) => {
-    setTodos(todos.filter(todo => todo.id !== id));
-  };
+  const deleteTodo = (index) => setTodos(todos.filter((_, i) => i !== index));
 
   return (
     <div>
-      <h1>Todo List</h1>
       <AddTodoForm addTodo={addTodo} />
       <ul>
-        {todos.map(todo => (
-          <li
-            key={todo.id}
-            onClick={() => toggleTodo(todo.id)}
-            style={{ textDecoration: todo.completed ? 'line-through' : 'none', cursor: 'pointer' }}
-          >
-            {todo.text}
-            <button onClick={(e) => { e.stopPropagation(); deleteTodo(todo.id); }}>Delete</button>
+        {todos.map((todo, index) => (
+          <li key={index}>
+            <span
+              style={{
+                textDecoration: todo.completed ? "line-through" : "none",
+                cursor: "pointer"
+              }}
+              onClick={() => toggleTodo(index)}
+            >
+              {todo.text}
+            </span>
+            <button onClick={() => deleteTodo(index)}>Delete</button>
           </li>
         ))}
       </ul>
