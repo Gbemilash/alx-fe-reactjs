@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import TodoList from '../components/TodoList';
+import TodoList from '../components/TodoList.jsx';
 
 test('renders initial todos', () => {
   render(<TodoList />);
@@ -24,7 +24,8 @@ test('toggles a todo', () => {
 
 test('deletes a todo', () => {
   render(<TodoList />);
-  const deleteBtn = screen.getByText('Delete');
+  const deleteBtn = screen.getAllByText('Delete')[0];
+  const todoItem = screen.getByText('Learn React');
   fireEvent.click(deleteBtn);
-  expect(screen.queryByText('Learn React')).not.toBeInTheDocument();
+  expect(todoItem).not.toBeInTheDocument();
 });
