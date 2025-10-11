@@ -1,13 +1,11 @@
 import React from "react";
 import TodoList from "./components/TodoList";
 
-function App() {
+export default function App() {
   return (
-    <div style={{ padding: "20px", maxWidth: "500px", margin: "0 auto" }}>
+    <div>
       <TodoList />
     </div>
   );
 }
-
-export default App;
 
