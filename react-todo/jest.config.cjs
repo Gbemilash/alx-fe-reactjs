@@ -1,7 +1,8 @@
 export default {
-  testEnvironment: "jest-environment-jsdom",
+  testEnvironment: 'jest-environment-jsdom',
   transform: {
-    "^.+\\.jsx?$": "babel-jest"
+    '^.+\\.[jt]sx?$': 'babel-jest'
   },
-  moduleFileExtensions: ["js", "jsx"]
+  moduleFileExtensions: ['js', 'jsx', 'json', 'node'],
+  setupFilesAfterEnv: ['./jest.setup.js']
 };
